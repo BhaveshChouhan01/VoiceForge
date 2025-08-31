@@ -132,35 +132,7 @@ class CharacterAI:
         return self._generate_mock_dialogue(character_id, emotion)
 
     async def analyze_text_for_character(self, text: str, character_id: str) -> Dict:
-        profile = await self.get_character_profile(character_id)
-        if not self.use_ai:
-            return self._analyze_mock_delivery(text, character_id)
-
-        prompt = (
-            f"Analyze this for in-character delivery (JSON keys: emotion, pacing, emphasis_words, "
-            f"inflection, pauses, tone_notes).\n\n"
-            f"Text: \"{text}\"\nCharacter: {profile.get('name')} – {profile.get('description')}\n"
-            f"Personality: {profile.get('personality','')}"
-        )
-
-        try:
-            if USE_GEMINI and _gemini_model:
-                resp = await asyncio.to_thread(lambda: _gemini_model.generate_content(prompt))
-                data = self._extract_json_from_text(resp.text.strip())
-                if data:
-                    return data
-            elif USE_OPENAI:
-                resp = await asyncio.to_thread(lambda: openai.Completion.create(
-                    engine="text-davinci-003", prompt=prompt, max_tokens=200))
-                data = self._extract_json_from_text(resp.choices[0].text)
-                if data:
-                    return data
-        except Exception as e:
-            print(f"[CharacterAI] AI analyze_text_for_character failed: {e}")
-
-        return self._analyze_mock_delivery(text, character_id)
-
-    async def analyze_text_for_character(self, text: str, character_id: str) -> Dict:
+        """FIXED: Removed duplicate method definition"""
         profile = await self.get_character_profile(character_id)
 
         if not self.use_ai:

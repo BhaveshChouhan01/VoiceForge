@@ -57,3 +57,6 @@ requests>=2.28.0
 # Windows: Download from https://ffmpeg.org/
 # Linux: sudo apt install ffmpeg
 # macOS: brew install ffmpeg
+numpy 
+transformers
+torch
